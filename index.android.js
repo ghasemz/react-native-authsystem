@@ -7,15 +7,18 @@
 import React, { Component } from 'react';
 import Drawer from 'react-native-drawer';
 import Button from 'react-native-button';
+import Notification from 'react-native-system-notification';
+
+
 
 import {Router, routerReducer, Route, Container, Animations, Schema, Actions} from 'react-native-redux-router';
 
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import Launch from './Launch.js';
-import Home from './Home.js';
-import {NavBar, NavBarModal} from './NavBar.js';
+import Launch from './modules/Launch.js';
+import Home from './modules/Home.js';
+import {NavBar, NavBarModal} from './modules/NavBar.js';
 import {getStoredState, autoRehydrate, createPersistor} from 'redux-persist'
 
 
@@ -47,7 +50,7 @@ class ControlPanel extends Component {
 
 var reducers = {};
 
-const persistConfig = {whitelist:"test"};
+const persistConfig = {whitelist: "test"};
 
 
 getStoredState(persistConfig, (err, restoredState) => {
@@ -69,7 +72,16 @@ getStoredState(persistConfig, (err, restoredState) => {
                 <View style={{flex: 1, backgroundColor: '#fff'}}>
                     <View style={{margin: 10}}><Button onPress={()=> {
                 this._drawer.closeDrawer();
+                 Notification.create({ subject: 'Hey', message: 'Yo! Hello world.' , smallIcon: 'ic_launcher'});
+
+                // Listen to notification-clicking events
+                Notification.addListener('press', function(e) {
+                  console.log(e);
+                });
+
                 Actions.home();
+
+
                 }
                 }>Go to Register page</Button></View>
                 </View>
