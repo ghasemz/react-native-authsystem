@@ -21,7 +21,10 @@ import Home from './modules/Home.js';
 import VideoPlayer from './modules/Video.js';
 import {NavBar, NavBarModal} from './modules/NavBar.js';
 import {getStoredState, autoRehydrate, createPersistor} from 'redux-persist'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import LocalizedStrings from 'react-native-localization';
 
+const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 
 import {
     AppRegistry,
@@ -60,6 +63,24 @@ getStoredState(persistConfig, (err, restoredState) => {
 
 
     class AwesomeProject extends Component {
+        constructor(props){
+            super(props);
+
+            this.strings = new LocalizedStrings({
+                en:{
+                    video:"Video",
+                    boiledEgg:"Boiled egg",
+                    softBoiledEgg:"Soft-boiled egg",
+                    choice:"How to choose the egg"
+                },
+                fa: {
+                    video:"ویدیو",
+                    boiledEgg:"Uovo sodo",
+                    softBoiledEgg:"Uovo alla coque",
+                    choice:"Come scegliere l'uovo"
+                }
+            });
+        }
         closeControlPanel = () => {
             this._drawer.close()
         };
@@ -69,6 +90,7 @@ getStoredState(persistConfig, (err, restoredState) => {
 
         render() {
             console.log("hamed");
+            this.strings.setLanguage('fa');
             var navigationView = (
                 <View style={{flex: 1, backgroundColor: '#fff'}}>
                     <View style={{margin: 10}}><Button onPress={()=> {
@@ -88,7 +110,7 @@ getStoredState(persistConfig, (err, restoredState) => {
                 this._drawer.closeDrawer();
                 Actions.video();
                 }
-                }>Video Player</Button></View>
+                }>{this.strings.video}{myIcon}</Button></View>
                 </View>
             );
 
