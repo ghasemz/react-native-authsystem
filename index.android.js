@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 
 import Launch from './modules/Launch.js';
 import Home from './modules/Home.js';
+import VideoPlayer from './modules/Video.js';
 import {NavBar, NavBarModal} from './modules/NavBar.js';
 import {getStoredState, autoRehydrate, createPersistor} from 'redux-persist'
 
@@ -83,7 +84,11 @@ getStoredState(persistConfig, (err, restoredState) => {
 
 
                 }
-                }>Go to Register page</Button></View>
+                }>Go to Register page</Button><Button onPress={()=> {
+                this._drawer.closeDrawer();
+                Actions.video();
+                }
+                }>Video Player</Button></View>
                 </View>
             );
 
@@ -108,6 +113,7 @@ getStoredState(persistConfig, (err, restoredState) => {
 
                                 <Route name="launch" component={Launch} initial={true} title="Launch" schema="default"/>
                                 <Route name="home" component={Home} title="Home" schema="default"/>
+                                <Route name="video" component={VideoPlayer} title="Video" schema="default"/>
                             </Router>
 
                         </View>
