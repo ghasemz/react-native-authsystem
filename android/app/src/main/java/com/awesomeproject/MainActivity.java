@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.neson.react.notification.NotificationPackage;    // <- Add this line
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
+import com.rnfs.RNFSPackage;  // <--- import
 
 public class MainActivity extends ReactActivity {
 
@@ -39,7 +40,10 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
                 new NotificationPackage(this),
-                new MainReactPackage(), new ReactVideoPackage(), new ReactNativeLocalizationPackage()
+                new MainReactPackage(),
+                new ReactVideoPackage(),
+                new ReactNativeLocalizationPackage(),
+                new RNFSPackage()
         );
     }
 }
