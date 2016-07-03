@@ -4,27 +4,28 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Drawer from 'react-native-drawer';
 import Button from 'react-native-button';
 import Notification from 'react-native-system-notification';
 
 
-
 import {Router, routerReducer, Route, Container, Animations, Schema, Actions} from 'react-native-redux-router';
 
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
 
 import Launch from './modules/Launch.js';
 import Home from './modules/Home.js';
 import VideoPlayer from './modules/Video.js';
+import TimeLine from './modules/TimeLine.js';
+
 import {NavBar, NavBarModal} from './modules/NavBar.js';
 import {getStoredState, autoRehydrate, createPersistor} from 'redux-persist'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LocalizedStrings from 'react-native-localization';
 
-const myIcon = (<Icon name="rocket" size={30} color="#900" />)
+const myIcon = (<Icon name="rocket" size={30} color="#900"/>)
 
 import {
     AppRegistry,
@@ -61,29 +62,52 @@ getStoredState(persistConfig, (err, restoredState) => {
     const store = createStore(combineReducers({routerReducer, ...reducers}), restoredState);
     const persistor = createPersistor(store, persistConfig);
 
-
     class AwesomeProject extends Component {
-        constructor(props){
+        constructor(props) {
             super(props);
-
             this.strings = new LocalizedStrings({
-                en:{
-                    video:"Video",
-                    boiledEgg:"Boiled egg",
-                    softBoiledEgg:"Soft-boiled egg",
-                    choice:"How to choose the egg"
+                en: {
+                    video: "Video",
+                    timeline: "Timeline",
+                    boiledEgg: "Boiled egg",
+                    softBoiledEgg: "Soft-boiled egg",
+                    choice: "How to choose the egg"
                 },
                 fa: {
-                    video:"ویدیو",
-                    boiledEgg:"Uovo sodo",
-                    softBoiledEgg:"Uovo alla coque",
-                    choice:"Come scegliere l'uovo"
+                    video: "ویدیو",
+                    timeline: "تایم لاین",
+                    boiledEgg: "Uovo sodo",
+                    softBoiledEgg: "Uovo alla coque",
+                    choice: "Come scegliere l'uovo"
                 }
             });
         }
+
+        goToHome = () => {
+            this._drawer.closeDrawer();
+            Notification.create({subject: 'Hey', message: 'Yo! Hello world.', smallIcon: 'ic_launcher'});
+            // Listen to notification-clicking events
+            Notification.addListener('press', function (e) {
+                console.log(e);
+            });
+            Actions.home();
+        };
+
+        goToVideo = ()=> {
+            this._drawer.closeDrawer();
+            // Listen to notification-clicking events
+            Actions.video();
+        };
+
+        goToTimeLine = () => {
+            this._drawer.closeDrawer();
+            Actions.timeline();
+        };
+
         closeControlPanel = () => {
             this._drawer.close()
         };
+
         openControlPanel = () => {
             this._drawer.open()
         };
@@ -93,26 +117,12 @@ getStoredState(persistConfig, (err, restoredState) => {
             this.strings.setLanguage('fa');
             var navigationView = (
                 <View style={{flex: 1, backgroundColor: '#fff'}}>
-                    <View style={{margin: 10}}><Button onPress={()=> {
-                this._drawer.closeDrawer();
-                 Notification.create({ subject: 'Hey', message: 'Yo! Hello world.' , smallIcon: 'ic_launcher'});
-
-                // Listen to notification-clicking events
-                Notification.addListener('press', function(e) {
-                  console.log(e);
-                });
-
-                Actions.home();
-
-
-                }
-                }>Go to Register page</Button><Button onPress={()=> {
-                this._drawer.closeDrawer();
-                Actions.video();
-                }
-                }>{this.strings.video}{myIcon}</Button></View>
-                </View>
-            );
+                    <View style={{margin: 10}}>
+                        <Button onPress={this.goToHome}>Go to Home</Button>
+                        <Button onPress={this.goToTimeLine}>{this.strings.timeline}{myIcon}</Button>
+                        <Button onPress={this.goToVideo}>{this.strings.video}{myIcon}</Button>
+                    </View>
+                </View>);
 
             return (
                 <Provider store={store}>
@@ -136,6 +146,7 @@ getStoredState(persistConfig, (err, restoredState) => {
                                 <Route name="launch" component={Launch} initial={true} title="Launch" schema="default"/>
                                 <Route name="home" component={Home} title="Home" schema="default"/>
                                 <Route name="video" component={VideoPlayer} title="Video" schema="default"/>
+                                <Route name="timeline" component={TimeLine} title="TimeLine" schema="default"/>
                             </Router>
 
                         </View>
@@ -153,18 +164,18 @@ getStoredState(persistConfig, (err, restoredState) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#F5FCFF',
+            backgroundColor: '#F5FCFF'
         },
         welcome: {
             fontSize: 20,
             textAlign: 'center',
-            margin: 10,
+            margin: 10
         },
         instructions: {
             textAlign: 'center',
             color: '#333333',
-            marginBottom: 5,
-        },
+            marginBottom: 5
+        }
     });
 
     AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
