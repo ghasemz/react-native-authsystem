@@ -1,6 +1,7 @@
 package com.awesomeproject;
 
 import com.facebook.react.ReactActivity;
+import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -41,6 +42,7 @@ public class MainActivity extends ReactActivity {
         return Arrays.<ReactPackage>asList(
                 new NotificationPackage(this),
                 new MainReactPackage(),
+            new ReactNativeI18n(),
                 new ReactVideoPackage(),
                 new ReactNativeLocalizationPackage(),
                 new RNFSPackage()

@@ -3,24 +3,41 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
   "dependencies": {
+    "cardinal": "^0.7.1",
+    "install": "^0.8.1",
+    "node-gyp": "^3.4.0",
+    "npm": "^3.10.5",
     "react": "^15.1.0",
     "react-native": "0.27.2",
+    "react-native-animatable": "^0.6.1",
     "react-native-button": "^1.6.0",
     "react-native-drawer": "^2.2.3",
     "react-native-fs": "^1.5.1",
     "react-native-gcm-android": "^0.2.0",
+    "react-native-google-signin": "^0.6.1",
+    "react-native-i18n": "0.0.8",
+    "react-native-keyboard-aware-scroll-view": "^0.1.2",
     "react-native-localization": "^0.1.15",
     "react-native-navbar": "^1.5.0",
     "react-native-redux-router": "^1.0.7",
+    "react-native-smart-scroll-view": "^1.3.6",
     "react-native-system-notification": "^0.1.11",
     "react-native-vector-icons": "^2.0.3",
     "react-native-video": "^0.8.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-persist": "^3.2.2",
-    "telegram.link": "^0.6.4"
+    "tcomb-form-native": "^0.5.3",
+    "telegram.link": "^0.6.4",
+    "whatwg-url": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-jest": "^13.2.2",
+    "babel-polyfill": "^6.9.1",
+    "jest-cli": "^13.2.3"
   }
 }
