@@ -12,8 +12,8 @@ import {connect} from 'react-redux';
 import { browserHistory, Link } from 'react-router'
 import { push } from 'react-router-redux';
 
-import {Login} from 'trader/user/auth';
-import Settings from 'trader/settings';
+import {Login} from 'modules/user/auth';
+import Settings from 'modules/settings';
 
 
 class Header extends React.Component {
@@ -34,32 +34,7 @@ class Header extends React.Component {
         return (
             <header>
                 <Grid fluid={true}>
-                    <Row>
-                        <Col  xl={4} smOffset={4} sm={2} xsOffset={4} xs={4}>
-                            <h3></h3>
-                            <ButtonGroup>
-                                <Button onClick={this.currencyChangeHandler("USD")}
-                                        active={this.props.settings.currency == "USD"}>دلار</Button>
-                                <Button onClick={this.currencyChangeHandler("IRR")}
-                                        active={this.props.settings.currency == "IRR"}>
-                                    ریال</Button>
-                            </ButtonGroup>
-                            
-                        </Col>
-
-                        <Col xl={4} sm={2} xs={4}>
-                            <h3></h3>
-                            <ButtonGroup>
-                                <Button onClick={this.changeLangHandler("fa")}
-                                        active={this.props.lang == "fa"}>فا </Button>
-                                <Button onClick={this.changeLangHandler("en")} active={this.props.lang == "en"}>
-                                    En </Button>
-                            </ButtonGroup>
-
-                        </Col>
-
-
-                    </Row>
+                   
                 </Grid>
 
             </header>);

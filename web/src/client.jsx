@@ -1,4 +1,5 @@
+import 'babel-helpers';
 import 'bootstrap-loader';
-import './trader/client.jsx';
+import './modules/client.jsx';
 
 //import "questionmarkjs"

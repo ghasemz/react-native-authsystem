@@ -2,16 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute, Link, hashHistory, browserHistory} from 'react-router'
 import {reducer as formReducer} from 'redux-form';
-import {Instrument as Instrument, reducer as insReducer} from 'trader/instrument';
-import {Registration, reducer as authReducer, Login, Confirmation} from 'trader/user/auth';
-import Home from "trader/home"
-import App, {reducer as appReducer} from "trader/app";
-import {reducer as scheduleReducer} from "trader/schedule";
-import {reducer as bidaskReducer} from "trader/bidask";
-import Settings, {reducer as settingsReducer, DefaultValues} from "trader/settings";
-import {reducer as datasheetReducer} from "trader/datasheet";
-import About from "trader/about";
-import {Root} from "trader/root";
+import {Registration, reducer as authReducer, Login, Confirmation} from 'modules/user/auth';
+import Home from "modules/home"
+import App, {reducer as appReducer} from "modules/app";
+import Settings, {reducer as settingsReducer, DefaultValues} from "modules/settings";
+import About from "modules/about";
+import {Root} from "modules/root";
 
 import {createHistory} from 'history'
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
@@ -33,11 +29,7 @@ const reducer = combineReducers({
     form: formReducer,
     app: appReducer,
     auth: authReducer,
-    settings: settingsReducer,
-    instruments: insReducer,
-    schedules: scheduleReducer,
-    bidasks: bidaskReducer,
-    datasheets: datasheetReducer
+    settings: settingsReducer
 });
 
 const baseHistory = browserHistory;
@@ -71,7 +63,6 @@ getStoredState(persistConfig, (err, restoredState) => {
                         <Route path="login" component={Login}/>
                         <Route path="settings" component={Settings}/>
                         <Route path="confirmations/:confid" component={Confirmation}/>
-                        <Route path="i/:instId" component={Instrument}/>
                     </Route>
 
                 </Route>

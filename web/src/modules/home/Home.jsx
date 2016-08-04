@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import About from "trader/about";
-import App from "trader/app";
-import {TraderStockChart} from "trader/chart";
-import {InstrumentTable} from "trader/instrument";
-
+import About from "modules/about";
+import App from "modules/app";
 import {Button, ButtonToolbar, Grid, Col, Row, Tab, Tabs, Table, ButtonGroup} from 'react-bootstrap';
 var FontAwesome = require('react-fontawesome');
-import Settings from 'trader/settings';
+import Settings from 'modules/settings';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Link} from 'react-router'
-import {Login} from 'trader/user/auth'
+import {Login} from 'modules/user/auth'
+
+import {Hello} from "./Hello.tsx"
 
 
 class Home extends React.Component {
@@ -21,7 +20,9 @@ class Home extends React.Component {
 
     render() {
         return (
+
             <div id="home" className="page js-page ">
+                <Hello/>
                 <div className="header header-over large">
                     <div className="container">
                         <div className="row">

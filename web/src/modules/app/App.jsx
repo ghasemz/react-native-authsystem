@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 const api = restful('/api/v0.1', fetchBackend(fetch));
 const api_go = restful('/api/v0.1-go', fetchBackend(fetch));
 
-import {TraderStockChart} from "trader/chart";
+
 import ProgressBar  from 'react-progress-bar-plus';
 var Hammer = require('react-hammerjs');
 require('react-progress-bar-plus/src/progress-bar.scss');
@@ -20,18 +20,18 @@ import keydown, {Keys} from 'react-keydown';
 import {Button, ButtonToolbar, Grid, Col, Row, Tab, Tabs, Table, ButtonGroup} from 'react-bootstrap';
 import {Router, Route, IndexRoute, Link, hashHistory, browserHistory} from 'react-router'
 
-import Footer from 'trader/theme/footer';
-import About from "trader/about";
+import Footer from 'modules/theme/footer';
+import About from "modules/about";
 import LocalizedStrings from 'react-localization';
 import FontAwesome from 'react-fontawesome';
-import {Registration, Login} from 'trader/user/auth';
+import {Registration, Login} from 'modules/user/auth';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {push} from 'react-router-redux';
 import Alert from 'react-s-alert';
 
-import Header from 'trader/theme/header';
-import Settings from 'trader/settings';
+import Header from 'modules/theme/header';
+import Settings from 'modules/settings';
 
 class App extends React.Component {
     static MAIN_MENU_CHANGE_STATE = "MAIN_MENU_CHANGE_STATE";
@@ -213,10 +213,7 @@ class App extends React.Component {
 
                 <div className='app'>
 
-                    <Menu isOpen={this.props.menu.isOpen} pageWrapId={ "page-wrap" } outerContainerId={ "root" }>
-                        <SideNav selected={this.props.selected} navs={this.state.navi}
-                                 onSelection={this.handleSelection.bind(this)}/>
-                    </Menu>
+
                     <main id="page-wrap">
                         <ProgressBar percent={this.state.percent}
                                      autoIncrement={this.state.autoIncrement}

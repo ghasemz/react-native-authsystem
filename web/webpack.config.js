@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var fs = require('fs');
-
+var nodeModulesPath = path.join(__dirname, 'node_modules');
 
 var nodeExternals = require('webpack-node-externals');
 
@@ -13,7 +13,7 @@ module.exports = [{
     devtool: 'source-map',
     resolve: {
         alias: {
-            trader: path.resolve(__dirname, 'src/trader')
+            modules: path.resolve(__dirname, 'src/modules')
         },
         extensions: ['', '.js', '.jsx', '.coffee'],
         modulesDirectories: ["web_modules", "node_modules", "bower_components"]
@@ -41,6 +41,13 @@ module.exports = [{
                 presets: ['es2015', 'stage-0', 'react'],
                 plugins: ['transform-object-rest-spread', 'transform-object-assign']
             }
+        }, {
+            test: /\.tsx?$/,
+            loader: 'babel?cacheDirectory,plugins[]=' + require.resolve(path.join(nodeModulesPath, 'babel-plugin-transform-object-rest-spread')) +
+            ',presets[]=' + require.resolve(path.join(nodeModulesPath, 'babel-preset-es2015-loose')) +
+            '!ts-loader?configFileName=tsconfig.webpack.json',
+            include: path.resolve(__dirname, "src"),
+            exclude: /node_modules/
         }, {
             test: /\.jade$/,
             loader: 'jade'

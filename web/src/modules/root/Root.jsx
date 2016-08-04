@@ -1,9 +1,9 @@
 import 'whatwg-fetch';
 
 import React from 'react';
-import {Registration, Login} from 'trader/user/auth';
+import {Registration, Login} from 'modules/user/auth';
 import {connect} from 'react-redux';
-import Settings from 'trader/settings';
+import Settings from 'modules/settings';
 import {push, replace} from 'react-router-redux';
 import {bindActionCreators} from 'redux';
 

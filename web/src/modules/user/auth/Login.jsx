@@ -27,7 +27,7 @@ import 'isomorphic-fetch';
 import {browserHistory, Link} from 'react-router'
 
 import {push} from 'react-router-redux';
-import App from 'trader/app';
+import App from 'modules/app';
 
 
 import FormInput from './FormInput.jsx';

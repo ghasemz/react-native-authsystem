@@ -88,7 +88,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(cookieParser());
 
-app.use('/', require('./trader'));
+app.use('/', require('./modules'));
 
 var public_root = express["static"]("dist/");
 
