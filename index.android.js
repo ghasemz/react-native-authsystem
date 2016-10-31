@@ -12,11 +12,13 @@ import Notification from 'react-native-system-notification';
 
 import {Router, routerReducer, Route, Container, Animations, Schema, Actions} from 'react-native-redux-router';
 
+
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
 import Launch from './modules/Launch.js';
 import Home from './modules/Home.js';
+import CounterReducer from './modules/navbar_reducer';
 import VideoPlayer from './modules/Video.js';
 import TimeLine from './modules/TimeLine.js';
 
@@ -53,7 +55,9 @@ class ControlPanel extends Component {
     }
 }
 
-var reducers = {};
+var reducers = {
+    counter:CounterReducer
+};
 
 const persistConfig = {whitelist: "test"};
 
@@ -112,6 +116,8 @@ getStoredState(persistConfig, (err, restoredState) => {
             this._drawer.open()
         };
 
+
+
         render() {
             console.log("hamed");
             this.strings.setLanguage('fa');
@@ -144,7 +150,7 @@ getStoredState(persistConfig, (err, restoredState) => {
                                 <Schema name="tab" navBar={NavBar}/>
 
                                 <Route name="launch" component={Launch} initial={true} title="Launch" schema="default"/>
-                                <Route name="home" component={Home} title="Home" schema="default"/>
+                                <Route name="home" component={Home} title="Home" schema="modal"/>
                                 <Route name="video" component={VideoPlayer} title="Video" schema="default"/>
                                 <Route name="timeline" component={TimeLine} title="TimeLine" schema="default"/>
                             </Router>

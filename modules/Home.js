@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableHighlight, TextInput} from  'react-native';
+import {View, Text, StyleSheet, TouchableHighlight, TextInput, BackAndroid} from  'react-native';
 var tcomb = require('tcomb-form-native');
 import React, {Component} from 'react';
 import Button from 'react-native-button';
@@ -104,7 +104,7 @@ class Register extends React.Component {
             <KeyboardAwareScrollView>
                 <View style={styles.container}>
                     <Demo/>
-                    <Animatable.View animation="bounceIn">
+                    <Animatable.View animation="bounceIn" style={{flex:1}}>
                         <Form
                             ref="form"
                             type={Person}

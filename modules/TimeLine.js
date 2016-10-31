@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableHighlight} from  'react-native';
+import {View, Text, StyleSheet, TouchableHighlight,BackAndroid} from  'react-native';
 import React, {Component} from 'react';
 import Button from 'react-native-button';
 
@@ -6,6 +6,8 @@ import {Actions} from 'react-native-redux-router';
 
 
 class TimeLine extends React.Component {
+    
+
     render() {
 
         return (
