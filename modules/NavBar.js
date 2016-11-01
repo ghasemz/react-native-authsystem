@@ -49,7 +49,7 @@ class MenuButton extends React.Component {
     render() {
         console.log(this.props.state)
         return (
-        <TouchableNativeFeedback useForeground={true}
+        <TouchableNativeFeedback useForeground={true} delayPressIn={0}
             onPress={this.onPressButton.bind(this)}
             background={TouchableNativeFeedback.SelectableBackgroundBorderless()}>
             <View style={{width:56, padding:5, paddingLeft:16}}>
@@ -90,10 +90,10 @@ class NavBarBase extends React.Component {
         var Actions = this.props.routes;
         console.log("Props : " + this.props);
         return <NavigationBar style={styles.navBar}
-                              titleColor='white'
+                              titleColor='#fff'
                               buttonsColor='white'
                               statusBar={{style:'light-content', hidden: false}}
-                              title={{title:this.props.title}}
+                              title={<Text style={{color:"white", fontSize:18}}>{this.props.title}</Text>}
                               prevTitle={this.props.initial ? " " : null}
                               leftButton={this.props.leftButton ? this.props.leftButton : {title:''}}
                               rightButton={this.props.rightButton ? this.props.rightButton : {title:''}}

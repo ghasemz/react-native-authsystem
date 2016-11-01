@@ -1,23 +1,9 @@
-import {View, Text, StyleSheet, TouchableHighlight,BackAndroid} from  'react-native';
+import {View, Text, StyleSheet, TouchableHighlight, BackAndroid, ActivityIndicator} from  'react-native';
 import React, {Component} from 'react';
 import Button from 'react-native-button';
 
 import {Actions} from 'react-native-redux-router';
 
-
-class TimeLine extends React.Component {
-    
-
-    render() {
-
-        return (
-            <View style={styles.container}>
-                <Text>TimeLine</Text>
-                <Button onPress={Actions.pop}>Back</Button>
-            </View>
-        );
-    }
-}
 
 var styles = StyleSheet.create({
     container: {
@@ -35,7 +21,45 @@ var styles = StyleSheet.create({
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5,
+    }, centering: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 8,
     },
 });
+
+class TimeLine extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            animating: true
+        };
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+
+    }
+
+
+
+
+    render() {
+
+        return (
+            <View style={styles.container}>
+               
+
+                <Text>ds</Text>
+            </View>
+        );
+    }
+}
+
+
 
 module.exports = TimeLine;

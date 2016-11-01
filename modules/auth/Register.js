@@ -32,8 +32,9 @@ I18n.translations = {
 
 var Form = tcomb.form.Form;
 var Gender = tcomb.enums({
-    M: 'Male',
-    F: 'Female'
+    M: 'مرد',
+    F: 'زن',
+    NA: 'مشخص نشده است'
 });
 
 var Positive = tcomb.refinement(tcomb.Number, function (n) {
@@ -43,23 +44,55 @@ var Positive = tcomb.refinement(tcomb.Number, function (n) {
 
 // here we are: define your domain model
 var Person = tcomb.struct({
-    name: tcomb.String,              // a required string
-    surname: tcomb.maybe(tcomb.String),  // an optional string
-    email: tcomb.String,
-    age: Positive,               // a required number
-    birthDate: tcomb.Date,
+
+    username: tcomb.String,              // a required string
+    password: tcomb.String,              // a required string
     gender: Gender,
-    rememberMe: tcomb.Boolean        // a boolean
+    firstname: tcomb.String,              // a required string
+    mobile: tcomb.Number,
+    lastname: tcomb.String,  // an optional string
+    email: tcomb.String,
+    birth: tcomb.Date,
 });
 
 
 var options = {
     fields: {
-        name: {
-            placeholder: 'Your placeholder here',
-            label: 'Insert your name',
-            help: 'Your help message here',
-            error: 'Insert a valid email'
+        username: {
+            placeholder: 'نام کاربری',
+            label: 'نام کاربری',
+            error: 'نام کاربری معتبر نیست'
+        }, password: {
+            placeholder: 'گذرواژه',
+            label: 'گذرواژه',
+            error: 'گذرواژه معتبر نیست'
+        }, firstname: {
+            placeholder: 'نام',
+            label: 'نام',
+            help: 'مثلا حامد',
+            error: 'نام معتبر نیست'
+        }, lastname: {
+            placeholder: 'نام خانوادگی',
+            label: 'نام خانوادگی',
+            help: 'مثلا محمدی',
+            error: 'نام خانوادگی معتبر نیست'
+        }, email: {
+            placeholder: 'you@server.com',
+            label: 'ایمیل',
+            error: 'آین آدرس معتبر نیست',
+        }, mobile: {
+            help: '09126136545 یا 989126136545',
+            placeholder: '09126136545',
+            label: 'شماره موبایل',
+            error: 'این شماره معتبر نیست',
+        }, birth: {
+            placeholder: 'you@server.com',
+            label: 'تاریخ تولد',
+            error: 'تاریخ تولد نادرست است'
+        }, gender: {
+            placeholder: 'you@server.com',
+            label: 'آقا یا خانم؟',
+            error: 'جنسیت انتخاب نشده است'
         }
     }
 };
@@ -77,10 +110,7 @@ class Register extends React.Component {
 
         this.state = ({
             forceFocusField: undefined,
-            value: {
-                name: 'Giulio',
-                surname: 'Canti'
-            },
+            value: {},
             text: "hames"
         });
 
@@ -88,14 +118,35 @@ class Register extends React.Component {
     }
 
     onChange(value) {
-        this.setState({value});
+        this.setState({value: value});
     }
 
     onPress() {
-        var value = this.refs.form.getValue();
-        if (value) {
-            console.log(value);
+
+        let hostAddress = "api.rasanak.com";
+        if (__DEV__) {
+            console.log(this.state.value);
+            hostAddress = "localhost:8080";
         }
+
+        fetch(`http://${hostAddress}/api/v0.1/accounts/origin/users?lang=${"fa"}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.value)
+        }).then(function (json) {
+            if (json.status != 201) {
+                console.log('parsed json', json);
+                return;
+            }
+
+        }).catch(function (ex) {
+            console.log('parsing failed', ex)
+        });
+
+
     }
 
 
@@ -103,8 +154,8 @@ class Register extends React.Component {
         return (
             <KeyboardAwareScrollView>
                 <View style={styles.container}>
+
                     <Demo/>
-                   
                         <Form
                             ref="form"
                             type={Person}
@@ -115,12 +166,8 @@ class Register extends React.Component {
 
                         <TouchableHighlight style={styles.button} onPress={this.onPress.bind(this)}
                                             underlayColor='#99d9f4'>
-                            <Text style={styles.buttonText}>Save</Text>
+                            <Text style={styles.buttonText}>ثبت نام</Text>
                         </TouchableHighlight>
-
-                        <Button onPress={Actions.pop}>Back</Button>
-
-
                 </View>
             </KeyboardAwareScrollView>
         );
@@ -154,8 +201,8 @@ var styles = StyleSheet.create({
     },
     button: {
         height: 36,
-        backgroundColor: '#48BBEC',
-        borderColor: '#48BBEC',
+        backgroundColor: '#CC02FF',
+        borderColor: '#CC02FF',
         borderWidth: 1,
         borderRadius: 8,
         marginBottom: 10,
@@ -163,26 +210,6 @@ var styles = StyleSheet.create({
         justifyContent: 'center'
     }
 });
-/*
 
- var styles = StyleSheet.create({
- container: {
- flex: 1,
- justifyContent: 'center',
- alignItems: 'center',
- backgroundColor: '#F5FCFF',
- },
- welcome: {
- fontSize: 20,
- textAlign: 'center',
- margin: 10,
- },
- instructions: {
- textAlign: 'center',
- color: '#333333',
- marginBottom: 5,
- },
- });
- */
 
 module.exports = Register;
