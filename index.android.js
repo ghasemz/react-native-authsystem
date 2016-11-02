@@ -7,14 +7,16 @@
 import React, {Component} from 'react';
 import Drawer from 'react-native-drawer';
 import Button from 'react-native-button';
-import Notification from 'react-native-system-notification';
+//import Notification from 'react-native-system-notification';
 import Login from "./modules/auth/Login.js";
+import thunk from 'redux-thunk';
+import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux'
 
-import {Router, routerReducer, Route, Container, Animations, Schema, Actions} from 'react-native-redux-router';
-
+import routes from './modules/routeReducer.js';
 
 import {createStore, combineReducers} from 'redux';
-import {Provider} from 'react-redux';
+import { applyMiddleware, compose } from 'redux';
+import {Provider,connect} from 'react-redux';
 
 import Launch from './modules/Launch.js';
 import Home from './modules/Home.js';
@@ -48,11 +50,10 @@ class MenuItemWithIcon extends Component {
             background={TouchableNativeFeedback.Ripple('#aaa')}>
             <View style={{flex: 1,
             flexDirection: 'row',
-
-
             justifyContent: 'flex-end',
             borderBottomColor: '#555',
-            borderBottomWidth: 1
+            borderBottomWidth: 1,
+            maxHeight: 48
 
             }}>
                 <View
@@ -92,14 +93,16 @@ var reducers = {
     counter: CounterReducer
 };
 
-const persistConfig = {whitelist: "test"};
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
+const persistConfig = {whitelist: "test"};
+const RouterWithRedux = connect()(Router);
 
 getStoredState(persistConfig, (err, restoredState) => {
-    const store = createStore(combineReducers({routerReducer, ...reducers}), restoredState);
+    const store = createStoreWithMiddleware(combineReducers({routes, ...reducers}), restoredState);
     const persistor = createPersistor(store, persistConfig);
 
-    class AwesomeProject extends Component {
+    class Rasanak extends Component {
         constructor(props) {
             super(props);
             this.strings = new LocalizedStrings({
@@ -125,16 +128,17 @@ getStoredState(persistConfig, (err, restoredState) => {
             this._drawer.closeDrawer();
 //            Notification.create({subject: 'Hey', message: 'Yo! Hello world.', smallIcon: 'ic_stat_rasanak_trans',color:"#CC02FF",category:"event"});
             // Listen to notification-clicking events
-            Notification.addListener('press', function (e) {
+            /*Notification.addListener('press', function (e) {
                 console.log(e);
-            });
+            });*/
 
         };
 
         goToVideo = ()=> {
+            Actions.video();
             this._drawer.closeDrawer();
             // Listen to notification-clicking events
-            Actions.video();
+
         };
 
         goToRegister = ()=> {
@@ -144,14 +148,16 @@ getStoredState(persistConfig, (err, restoredState) => {
         };
 
         goToLogin = ()=> {
+            Actions.login();
             this._drawer.closeDrawer();
             // Listen to notification-clicking events
-            Actions.login();
+
         };
 
         goToTimeLine = () => {
-            this._drawer.closeDrawer();
             Actions.timeline();
+            this._drawer.closeDrawer();
+
         };
 
         closeControlPanel = () => {
@@ -168,7 +174,7 @@ getStoredState(persistConfig, (err, restoredState) => {
             this.strings.setLanguage('fa');
             var navigationView = (
                 <View style={{flex: 1, backgroundColor: '#333'}}>
-                    <View >
+                    <View style={{flex: 1}}>
                         <Button onPress={this.goToHome}>Go to Home</Button>
                         <Button onPress={this.goToTimeLine}>{this.strings.timeline}{<Icon name="rocket" size={30}
                                                                                           color="#900"/>}</Button>
@@ -196,20 +202,20 @@ getStoredState(persistConfig, (err, restoredState) => {
                         <View style={{flex:1}}>
                             <View
                                 style={{position:'absolute',left:0,right:0,top:0,bottom:0,backgroundColor:'#F5FCFF'}}/>
-                            <Router>
-                                <Schema name="modal" sceneConfig={Animations.FlatFloatFromBottom} navBar={NavBarModal}/>
-                                <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
 
-                                <Schema name="withoutAnimation" navBar={NavBar}/>
-                                <Schema name="tab" navBar={NavBar}/>
 
-                                <Route name="launch" component={Launch} initial={true} title="Launch" schema="default"/>
-                                <Route name="login" component={Login} initial={true} title="ورود    " schema="default"/>
-                                <Route name="home" component={Home} title="Home" schema="default"/>
-                                <Route name="register" component={Register} title="ثبت نام" schema="default"/>
-                                <Route name="video" component={VideoPlayer} title="Video" schema="default"/>
-                                <Route name="timeline" component={TimeLine} title="TimeLine" schema="default"/>
-                            </Router>
+                            <RouterWithRedux sceneStyle={{backgroundColor:'#F7F7F7'}}>
+
+
+                                <Scene key="launch" component={Launch} initial={true} title="Launch" duration={0}/>
+                                <Scene key="login" component={Login} initial={true} title="ورود" duration={0}/>
+                                <Scene key="home" component={Home} title="Home" duration={0}/>
+                                <Scene key="register" component={Register} title="ثبت نام" duration={0} />
+                                <Scene key="video" component={VideoPlayer} title="Video" duration={0} />
+                                <Scene key="timeline" component={TimeLine} title="ویدیوها" duration={0}/>
+                            </RouterWithRedux>
+
+
                         </View>
                     </DrawerLayoutAndroid>
                 </Provider>
@@ -238,7 +244,7 @@ getStoredState(persistConfig, (err, restoredState) => {
         }
     });
 
-    AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+    AppRegistry.registerComponent('Rasanak', () => Rasanak);
 });
 
 
