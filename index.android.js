@@ -10,16 +10,17 @@ import Button from 'react-native-button';
 //import Notification from 'react-native-system-notification';
 import Login from "./modules/auth/Login.js";
 import thunk from 'redux-thunk';
-import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux'
+import {Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst} from 'react-native-router-flux'
 
 import routes from './modules/routeReducer.js';
 
 import {createStore, combineReducers} from 'redux';
-import { applyMiddleware, compose } from 'redux';
-import {Provider,connect} from 'react-redux';
+import {applyMiddleware, compose} from 'redux';
+import {Provider, connect} from 'react-redux';
 
 import Launch from './modules/Launch.js';
 import Home from './modules/Home.js';
+import Transfer from './modules/payment/Transfer.js';
 import Register from './modules/auth/Register.js';
 import CounterReducer from './modules/navbar_reducer';
 import VideoPlayer from './modules/Video.js';
@@ -43,7 +44,7 @@ import {
 class MenuItemWithIcon extends Component {
     render() {
 
-        var {icon,title,onPress}=this.props;
+        var {icon, title, onPress}=this.props;
         return <TouchableNativeFeedback
             delayPressIn={0}
             onPress={onPress}
@@ -129,8 +130,8 @@ getStoredState(persistConfig, (err, restoredState) => {
 //            Notification.create({subject: 'Hey', message: 'Yo! Hello world.', smallIcon: 'ic_stat_rasanak_trans',color:"#CC02FF",category:"event"});
             // Listen to notification-clicking events
             /*Notification.addListener('press', function (e) {
-                console.log(e);
-            });*/
+             console.log(e);
+             });*/
 
         };
 
@@ -149,6 +150,13 @@ getStoredState(persistConfig, (err, restoredState) => {
 
         goToLogin = ()=> {
             Actions.login();
+            this._drawer.closeDrawer();
+            // Listen to notification-clicking events
+
+        };
+
+        goToTransfer = ()=> {
+            Actions.transfer();
             this._drawer.closeDrawer();
             // Listen to notification-clicking events
 
@@ -183,6 +191,7 @@ getStoredState(persistConfig, (err, restoredState) => {
 
                         <MenuItemWithIcon icon="heart" title="منتخب" onPress={this.goToHome}/>
                         <MenuItemWithIcon icon="list" title="کانال ها" onPress={this.goToTimeLine}/>
+                        <MenuItemWithIcon icon="list" title="انتقال وجه" onPress={this.goToTransfer}/>
                         <MenuItemWithIcon icon="cloud-download" title="دانلودها"/>
                         <MenuItemWithIcon icon="user-plus" title="ثبت نام" onPress={this.goToRegister}/>
                         <MenuItemWithIcon icon="sign-in" title="ورود" onPress={this.goToLogin}/>
@@ -210,8 +219,9 @@ getStoredState(persistConfig, (err, restoredState) => {
                                 <Scene key="launch" component={Launch} initial={true} title="Launch" duration={0}/>
                                 <Scene key="login" component={Login} initial={true} title="ورود" duration={0}/>
                                 <Scene key="home" component={Home} title="Home" duration={0}/>
-                                <Scene key="register" component={Register} title="ثبت نام" duration={0} />
-                                <Scene key="video" component={VideoPlayer} title="Video" duration={0} />
+                                <Scene key="transfer" component={Transfer} title="انتقال وجه" duration={0}/>
+                                <Scene key="register" component={Register} title="ثبت نام" duration={0}/>
+                                <Scene key="video" component={VideoPlayer} title="Video" duration={0}/>
                                 <Scene key="timeline" component={TimeLine} title="ویدیوها" duration={0}/>
                             </RouterWithRedux>
 

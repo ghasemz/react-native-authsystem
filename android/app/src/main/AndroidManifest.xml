@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />                       <!-- <- Add this line -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>           <!-- <- Add this line -->
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-sdk
         android:minSdkVersion="16"
