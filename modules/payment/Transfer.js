@@ -7,12 +7,13 @@ import Tabs from 'react-native-tabs';
 import Resource from "../resource/Resource.js"
 import Auth from "../auth/Auth.js"
 var SendIntentAndroid = require('react-native-send-intent');
-
+import QRCode from 'react-native-qrcode';
 
 import Button from 'react-native-button';
 import Communications from 'react-native-communications';
 import {Actions, Router} from 'react-native-redux-router';
 var tcomb = require('tcomb-form-native');
+import Camera from 'react-native-camera';
 var Form = tcomb.form.Form;
 var styles = StyleSheet.create({
     container: {
@@ -43,6 +44,18 @@ var styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'stretch',
         justifyContent: 'center'
+    },preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    capture: {
+        flex: 0,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        color: '#000',
+        padding: 10,
+        margin: 40
     }
 });
 
@@ -61,7 +74,7 @@ BackAndroid.addEventListener('hardwareBackPress', function () {
 class Transfer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {page: 'send'};
+        this.state = {page: 'send', text: 'http://facebook.github.io/react-native/',};
 
         let auth = new Auth({auth: {}});
         //Resource.LoadByIdPromise(auth,"hamed","/users",{})
@@ -98,6 +111,14 @@ class Transfer extends React.Component {
 
     onPress() {
         SendIntentAndroid.sendPhoneCall(`*788*97*8600*${this.state.value.amount}%23`);
+    }
+
+    takePicture() {
+        const options = {};
+        //options.location = ...
+        this.camera.capture({metadata: options})
+            .then((data) => console.log(data))
+            .catch(err => console.error(err));
     }
 
     render() {
@@ -158,6 +179,12 @@ class Transfer extends React.Component {
                         <Text style={styles.buttonText}>پرداخت</Text>
                     </TouchableHighlight>
 
+                    <QRCode
+                        value={this.state.text}
+                        size={200}
+                        bgColor='purple'
+                        fgColor='white'/>
+
                 </View>;
                 break;
             case "sell":
@@ -169,6 +196,14 @@ class Transfer extends React.Component {
                         value={this.state.value}
                         onChange={this.onChange.bind(this)}
                     />
+                    <Camera
+                        ref={(cam) => {
+                            this.camera = cam;
+                          }}
+                        style={styles.preview}
+                        aspect={Camera.constants.Aspect.fill}>
+                        <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+                    </Camera>
                     <TouchableHighlight style={styles.button} onPress={this.onPress.bind(this)}
                                         underlayColor='#99d9f4'>
                         <Text style={styles.buttonText}>درخواست پرداخت</Text>
@@ -185,10 +220,12 @@ class Transfer extends React.Component {
                         value={this.state.value}
                         onChange={this.onChange.bind(this)}
                     />
+
                     <TouchableHighlight style={styles.button} onPress={this.onPress.bind(this)}
                                         underlayColor='#99d9f4'>
                         <Text style={styles.buttonText}>انتقال به حساب</Text>
                     </TouchableHighlight>
+
 
                 </View>;
                 break;
